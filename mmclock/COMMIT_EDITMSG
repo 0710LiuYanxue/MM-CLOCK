@@ -1,0 +1,398 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+#
+# Initial commit
+#
+# Changes to be committed:
+#	new file:   Boost_Test/CMakeLists.txt
+#	new file:   Boost_Test/algoTest.cpp
+#	new file:   CMakeLists.txt
+#	new file:   README.md
+#	new file:   WATT-traces
+#	new file:   algos/ARC.hpp
+#	new file:   algos/Amclock.hpp
+#	new file:   algos/CLOCK.hpp
+#	new file:   algos/EvictStrategy.hpp
+#	new file:   algos/Generators.cpp
+#	new file:   algos/Generators.hpp
+#	new file:   algos/LRFU.cpp
+#	new file:   algos/LRFU.hpp
+#	new file:   algos/cf_lru.hpp
+#	new file:   algos/clocksweep.hpp
+#	new file:   algos/general.hpp
+#	new file:   algos/hyperbolic.hpp
+#	new file:   algos/lean_evict.hpp
+#	new file:   algos/lfu_k.cpp
+#	new file:   algos/lfu_k.hpp
+#	new file:   algos/lru.hpp
+#	new file:   algos/lruStackDist.cpp
+#	new file:   algos/lruStackDist.hpp
+#	new file:   algos/lru_k.hpp
+#	new file:   algos/lru_wsr.hpp
+#	new file:   algos/mclock0101.hpp
+#	new file:   algos/mclock0201.hpp
+#	new file:   algos/mclock0211.hpp
+#	new file:   algos/mclock1111.hpp
+#	new file:   algos/opt.hpp
+#	new file:   algos/random.hpp
+#	new file:   algos/s3fifo.hpp
+#	new file:   algos/staticOpt.cpp
+#	new file:   algos/staticOpt.hpp
+#	new file:   build/Boost_Test/Algo_tests
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/CXX.includecache
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/DependInfo.cmake
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/algoTest.cpp.o
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/build.make
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/cmake_clean.cmake
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/depend.internal
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/depend.make
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/flags.make
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/link.txt
+#	new file:   build/Boost_Test/CMakeFiles/Algo_tests.dir/progress.make
+#	new file:   build/Boost_Test/CMakeFiles/CMakeDirectoryInformation.cmake
+#	new file:   build/Boost_Test/CMakeFiles/progress.marks
+#	new file:   build/Boost_Test/Makefile
+#	new file:   build/Boost_Test/cmake_install.cmake
+#	new file:   build/CMakeCache.txt
+#	new file:   build/CMakeFiles/3.16.3/CMakeCCompiler.cmake
+#	new file:   build/CMakeFiles/3.16.3/CMakeCXXCompiler.cmake
+#	new file:   build/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_C.bin
+#	new file:   build/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_CXX.bin
+#	new file:   build/CMakeFiles/3.16.3/CMakeSystem.cmake
+#	new file:   build/CMakeFiles/3.16.3/CompilerIdC/CMakeCCompilerId.c
+#	new file:   build/CMakeFiles/3.16.3/CompilerIdC/a.out
+#	new file:   build/CMakeFiles/3.16.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
+#	new file:   build/CMakeFiles/3.16.3/CompilerIdCXX/a.out
+#	new file:   build/CMakeFiles/CMakeDirectoryInformation.cmake
+#	new file:   build/CMakeFiles/CMakeOutput.log
+#	new file:   build/CMakeFiles/Makefile.cmake
+#	new file:   build/CMakeFiles/Makefile2
+#	new file:   build/CMakeFiles/TargetDirectories.txt
+#	new file:   build/CMakeFiles/algos.dir/CXX.includecache
+#	new file:   build/CMakeFiles/algos.dir/DependInfo.cmake
+#	new file:   build/CMakeFiles/algos.dir/algos/Generators.cpp.o
+#	new file:   build/CMakeFiles/algos.dir/algos/LRFU.cpp.o
+#	new file:   build/CMakeFiles/algos.dir/algos/lfu_k.cpp.o
+#	new file:   build/CMakeFiles/algos.dir/algos/lruStackDist.cpp.o
+#	new file:   build/CMakeFiles/algos.dir/algos/staticOpt.cpp.o
+#	new file:   build/CMakeFiles/algos.dir/build.make
+#	new file:   build/CMakeFiles/algos.dir/cmake_clean.cmake
+#	new file:   build/CMakeFiles/algos.dir/cmake_clean_target.cmake
+#	new file:   build/CMakeFiles/algos.dir/depend.internal
+#	new file:   build/CMakeFiles/algos.dir/depend.make
+#	new file:   build/CMakeFiles/algos.dir/evalAccessTable/evalAccessTable.cpp.o
+#	new file:   build/CMakeFiles/algos.dir/flags.make
+#	new file:   build/CMakeFiles/algos.dir/link.txt
+#	new file:   build/CMakeFiles/algos.dir/progress.make
+#	new file:   build/CMakeFiles/cmake.check_cache
+#	new file:   build/CMakeFiles/evalAccessTable.dir/CXX.includecache
+#	new file:   build/CMakeFiles/evalAccessTable.dir/DependInfo.cmake
+#	new file:   build/CMakeFiles/evalAccessTable.dir/build.make
+#	new file:   build/CMakeFiles/evalAccessTable.dir/cmake_clean.cmake
+#	new file:   build/CMakeFiles/evalAccessTable.dir/depend.internal
+#	new file:   build/CMakeFiles/evalAccessTable.dir/depend.make
+#	new file:   build/CMakeFiles/evalAccessTable.dir/evalAccessTable/main.cpp.o
+#	new file:   build/CMakeFiles/evalAccessTable.dir/flags.make
+#	new file:   build/CMakeFiles/evalAccessTable.dir/link.txt
+#	new file:   build/CMakeFiles/evalAccessTable.dir/progress.make
+#	new file:   build/CMakeFiles/progress.marks
+#	new file:   build/Makefile
+#	new file:   build/cmake_install.cmake
+#	new file:   build/evalAccessTable
+#	new file:   build/libalgos.a
+#	new file:   build/outdir/count_mclock
+#	new file:   build/outdir/count_mclock.cpp
+#	new file:   build/outdir/output.csv
+#	new file:   build/outdir/output2213.csv
+#	new file:   build/outdir/output2987465.csv
+#	new file:   build/outdir/output2AF24.csv
+#	new file:   build/outdir/output2Fina1Amclock4.csv
+#	new file:   build/outdir/output2Fina1Amclock41.csv
+#	new file:   build/outdir/output2Fina2Amclock4.csv
+#	new file:   build/outdir/output2Fina2Amclocklru.csv
+#	new file:   build/outdir/output2Fina2lrukhyper.csv
+#	new file:   build/outdir/output2FinaAmclock6.csv
+#	new file:   build/outdir/output2FinaAmclock9.csv
+#	new file:   build/outdir/output2TpccA10.csv
+#	new file:   build/outdir/output2Web1amclock4.csv
+#	new file:   build/outdir/output2WebAmclock6.csv
+#	new file:   build/outdir/output2ZipA10.csv
+#	new file:   build/outdir/output2ZipScanAmclock8.csv
+#	new file:   build/outdir/output2ZipfAF.csv
+#	new file:   build/outdir/output2ZipfAF24.csv
+#	new file:   build/outdir/output2amclock.csv
+#	new file:   build/outdir/output2amclock1.csv
+#	new file:   build/outdir/output2amclock4.csv
+#	new file:   build/outdir/output2amclockdyn.csv
+#	new file:   build/outdir/output2amclockdyn4.csv
+#	new file:   build/outdir/output2amclockzip.csv
+#	new file:   build/outdir/output2dynAmclock2.csv
+#	new file:   build/outdir/output2dynAmclock4.csv
+#	new file:   build/outdir/output2dynAmclock6.csv
+#	new file:   build/outdir/output2dynAmclock8.csv
+#	new file:   build/outdir/output2tpccA11.csv
+#	new file:   build/outdir/output2tpccA111.csv
+#	new file:   build/outdir/output2tpccA112.csv
+#	new file:   build/outdir/output2tpccA113.csv
+#	new file:   build/outdir/output2tpccA161.csv
+#	new file:   build/outdir/output2tpccAF.csv
+#	new file:   build/outdir/output2tpccAF16.csv
+#	new file:   build/outdir/output2tpccAF8.csv
+#	new file:   build/outdir/output2tpccAm11.csv
+#	new file:   build/outdir/output2tpccAmclock11.csv
+#	new file:   build/outdir/output2tpccAmclock2.csv
+#	new file:   build/outdir/output2tpccAmclock4.csv
+#	new file:   build/outdir/output2tpccAmclock5.csv
+#	new file:   build/outdir/output2tpccAmclock51.csv
+#	new file:   build/outdir/output2tpccAmclock6.csv
+#	new file:   build/outdir/output2tpccAmclock6int.csv
+#	new file:   build/outdir/output2tpccAmclock7.csv
+#	new file:   build/outdir/output2tpccAmclock8.csv
+#	new file:   build/outdir/output2tpccAmclock9.csv
+#	new file:   build/outdir/output2tpcczip1bA10.csv
+#	new file:   build/outdir/output2tpcczipA10.csv
+#	new file:   build/outdir/output2tpceAmclock8.csv
+#	new file:   build/outdir/output2watt.csv
+#	new file:   build/outdir/output2wattdyn.csv
+#	new file:   build/outdir/output2wattzipf.csv
+#	new file:   build/outdir/output2zipA16.csv
+#	new file:   build/outdir/output2zipA161.csv
+#	new file:   build/outdir/output2zipAF16.csv
+#	new file:   build/outdir/output2zipAmclock.csv
+#	new file:   build/outdir/output2zipAmclock4.csv
+#	new file:   build/outdir/output2zipAmclock6.csv
+#	new file:   build/outdir/output2zipAmclock7.csv
+#	new file:   build/outdir/output2zipAmclock71.csv
+#	new file:   build/outdir/output2zipAmclock8.csv
+#	new file:   build/outdir/output2zipLrfu.csv
+#	new file:   build/outdir/output2zipScanA9.csv
+#	new file:   build/outdir/output2zipfHyper20.csv
+#	new file:   evalAccessTable/evalAccessTable.cpp
+#	new file:   evalAccessTable/evalAccessTable.hpp
+#	new file:   evalAccessTable/main.cpp
+#	new file:   newTraces/Financial1.csv
+#	new file:   newTraces/Financial1.spc
+#	new file:   newTraces/Financial2.csv
+#	new file:   newTraces/Financial2.spc
+#	new file:   newTraces/WebSearch1.csv
+#	new file:   newTraces/WebSearch1.spc
+#	new file:   newTraces/translate_trace
+#	new file:   newTraces/translate_trace.cpp
+#	new file:   testTrace/tpcc_zip/make_tpcczip
+#	new file:   testTrace/tpcc_zip/make_tpcczip.cpp
+#	new file:   testTrace/tpcc_zip/make_tpcczip_1b
+#	new file:   testTrace/tpcc_zip/tpcc_zip.csv
+#	new file:   testTrace/tpcc_zip/tpcc_zip_1b.csv
+#	new file:   testTrace/zipf_0.6_1.2/make_zipf.py
+#	new file:   testTrace/zipf_0.6_1.2/random_numbers.csv
+#	new file:   testTrace/zipfian/Zipfian_scan.csv
+#	new file:   testTrace/zipfian/make_zipfian_scan
+#	new file:   testTrace/zipfian/make_zipfian_scan.cpp
+#	new file:   testTrace/zipfian/trace.csv
+#
+# Changes not staged for commit:
+#	modified:   WATT-traces (modified content, untracked content)
+#	modified:   algos/ARC.hpp
+#	modified:   algos/Amclock.hpp
+#	modified:   algos/EvictStrategy.hpp
+#	modified:   algos/Generators.cpp
+#	modified:   algos/Generators.hpp
+#	modified:   algos/cf_lru.hpp
+#	modified:   algos/clocksweep.hpp
+#	modified:   algos/general.hpp
+#	modified:   algos/mclock0101.hpp
+#	modified:   algos/s3fifo.hpp
+#	modified:   build/Boost_Test/Algo_tests
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/CXX.includecache
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/DependInfo.cmake
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/algoTest.cpp.o
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/build.make
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/cmake_clean.cmake
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/depend.internal
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/depend.make
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/flags.make
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/link.txt
+#	deleted:    build/Boost_Test/CMakeFiles/Algo_tests.dir/progress.make
+#	modified:   build/Boost_Test/CMakeFiles/CMakeDirectoryInformation.cmake
+#	modified:   build/Boost_Test/CMakeFiles/progress.marks
+#	modified:   build/CMakeFiles/3.16.3/CMakeCCompiler.cmake
+#	modified:   build/CMakeFiles/3.16.3/CMakeCXXCompiler.cmake
+#	modified:   build/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_C.bin
+#	modified:   build/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_CXX.bin
+#	modified:   build/CMakeFiles/3.16.3/CMakeSystem.cmake
+#	deleted:    build/CMakeFiles/3.16.3/CompilerIdC/CMakeCCompilerId.c
+#	deleted:    build/CMakeFiles/3.16.3/CompilerIdC/a.out
+#	deleted:    build/CMakeFiles/3.16.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
+#	deleted:    build/CMakeFiles/3.16.3/CompilerIdCXX/a.out
+#	modified:   build/CMakeFiles/Makefile.cmake
+#	modified:   build/CMakeFiles/algos.dir/CXX.includecache
+#	modified:   build/CMakeFiles/algos.dir/DependInfo.cmake
+#	deleted:    build/CMakeFiles/algos.dir/algos/Generators.cpp.o
+#	deleted:    build/CMakeFiles/algos.dir/algos/LRFU.cpp.o
+#	deleted:    build/CMakeFiles/algos.dir/algos/lfu_k.cpp.o
+#	deleted:    build/CMakeFiles/algos.dir/algos/lruStackDist.cpp.o
+#	deleted:    build/CMakeFiles/algos.dir/algos/staticOpt.cpp.o
+#	modified:   build/CMakeFiles/algos.dir/build.make
+#	modified:   build/CMakeFiles/algos.dir/cmake_clean.cmake
+#	modified:   build/CMakeFiles/algos.dir/cmake_clean_target.cmake
+#	modified:   build/CMakeFiles/algos.dir/depend.internal
+#	modified:   build/CMakeFiles/algos.dir/depend.make
+#	deleted:    build/CMakeFiles/algos.dir/evalAccessTable/evalAccessTable.cpp.o
+#	modified:   build/CMakeFiles/algos.dir/flags.make
+#	modified:   build/CMakeFiles/algos.dir/link.txt
+#	modified:   build/CMakeFiles/algos.dir/progress.make
+#	modified:   build/CMakeFiles/evalAccessTable.dir/CXX.includecache
+#	modified:   build/CMakeFiles/evalAccessTable.dir/DependInfo.cmake
+#	modified:   build/CMakeFiles/evalAccessTable.dir/build.make
+#	modified:   build/CMakeFiles/evalAccessTable.dir/cmake_clean.cmake
+#	modified:   build/CMakeFiles/evalAccessTable.dir/depend.internal
+#	modified:   build/CMakeFiles/evalAccessTable.dir/depend.make
+#	deleted:    build/CMakeFiles/evalAccessTable.dir/evalAccessTable/main.cpp.o
+#	modified:   build/CMakeFiles/evalAccessTable.dir/flags.make
+#	modified:   build/CMakeFiles/evalAccessTable.dir/link.txt
+#	modified:   build/CMakeFiles/evalAccessTable.dir/progress.make
+#	modified:   build/evalAccessTable
+#	modified:   build/libalgos.a
+#	modified:   build/outdir/count_mclock
+#	modified:   build/outdir/count_mclock.cpp
+#	modified:   build/outdir/output.csv
+#	modified:   evalAccessTable/evalAccessTable.cpp
+#	modified:   evalAccessTable/evalAccessTable.hpp
+#	modified:   evalAccessTable/main.cpp
+#	deleted:    newTraces/Financial1.csv
+#	deleted:    newTraces/Financial1.spc
+#	deleted:    newTraces/Financial2.csv
+#	deleted:    newTraces/Financial2.spc
+#	deleted:    newTraces/WebSearch1.csv
+#	deleted:    newTraces/WebSearch1.spc
+#	deleted:    newTraces/translate_trace
+#	deleted:    newTraces/translate_trace.cpp
+#	modified:   testTrace/tpcc_zip/make_tpcczip
+#	modified:   testTrace/tpcc_zip/make_tpcczip.cpp
+#	modified:   testTrace/tpcc_zip/make_tpcczip_1b
+#	deleted:    testTrace/tpcc_zip/tpcc_zip.csv
+#	deleted:    testTrace/tpcc_zip/tpcc_zip_1b.csv
+#	deleted:    testTrace/zipf_0.6_1.2/make_zipf.py
+#	deleted:    testTrace/zipf_0.6_1.2/random_numbers.csv
+#	deleted:    testTrace/zipfian/Zipfian_scan.csv
+#	deleted:    testTrace/zipfian/make_zipfian_scan
+#	deleted:    testTrace/zipfian/make_zipfian_scan.cpp
+#	deleted:    testTrace/zipfian/trace.csv
+#
+# Untracked files:
+#	.DS_Store
+#	.vscode/
+#	algos/2Q.hpp
+#	algos/LIRS.hpp
+#	algos/TinyLFU.hpp
+#	algos/change_Parameters.hpp
+#	algos/mmclock.hpp
+#	algos/new_algo.hpp
+#	algos/thebest.hpp
+#	build/2Q_debug.txt
+#	build/ARC_debug.txt
+#	build/EAclock.txt
+#	build/EAclock_fdw.txt
+#	build/LIRS_debug.txt
+#	build/TinyLFUDebug.txt
+#	build/aging.csv
+#	build/bishe/
+#	build/hitrate.txt
+#	build/hitrate_10%60.txt
+#	build/hitrate_1000.txt
+#	build/hitrate_1k_70k_2k.txt
+#	build/newalgo.txt
+#	build/outdir/all_algorithms_diff.csv
+#	build/outdir/count_hitrate.py
+#	build/outdir/count_rw.py
+#	build/outdir/count_writes.py
+#	build/outdir/diff.py
+#	build/outdir/output2Zip1A10.csv
+#	build/outdir/output2dynA11.csv
+#	build/outdir/output2dynDW.csv
+#	build/outdir/output2tpccDW.csv
+#	build/outdir/output2tpcczip4AF.csv
+#	build/outdir/output2tpcczipDW.csv
+#	build/outdir/output2zip06m24.csv
+#	build/outdir/output2zip12m24.csv
+#	build/outdir/output2zip1mclock.csv
+#	build/outdir/output2zip91WA.csv
+#	build/outdir/output2zipAf.csv
+#	build/outdir/output2zipDW.csv
+#	build/outdir/output2zipscanDW.csv
+#	build/outdir/output_missrate.csv
+#	build/outdir/output_missrate_DW_hr_zip.csv
+#	build/outdir/output_missrate_Epoch_tpcc.csv
+#	build/outdir/output_missrate_action_tpcc.csv
+#	build/outdir/output_missrate_action_zipf.csv
+#	build/outdir/output_missrate_bool_uplimit_tpcc.csv
+#	build/outdir/output_missrate_bool_uplimit_zip.csv
+#	build/outdir/output_missrate_dw_bool_tpcc.csv
+#	build/outdir/output_missrate_dw_bool_tpcczip.csv
+#	build/outdir/output_missrate_dw_hr_tpcc.csv
+#	build/outdir/output_missrate_dw_hr_tpcczip.csv
+#	build/outdir/output_missrate_dw_hr_ziptpcc.csv
+#	build/outdir/output_missrate_dw_int_tpcczip.csv
+#	build/outdir/output_missrate_dw_uplimit_bool.csv
+#	build/outdir/output_missrate_dw_uplimit_tpcc.csv
+#	build/outdir/output_missrate_dw_uplimit_zip.csv
+#	build/outdir/output_missrate_epoch24.csv
+#	build/outdir/output_missrate_fde_noevict.csv
+#	build/outdir/output_missrate_fdw03_tpcc.csv
+#	build/outdir/output_missrate_fdw16.csv
+#	build/outdir/output_missrate_fdw_uplimit24.csv
+#	build/outdir/output_missrate_fdw_zippiz.csv
+#	build/outdir/output_missrate_final_06zip.csv
+#	build/outdir/output_missrate_final_10zip.csv
+#	build/outdir/output_missrate_final_12zip.csv
+#	build/outdir/output_missrate_final_tpcc.csv
+#	build/outdir/output_missrate_final_tpcc_rw.csv
+#	build/outdir/output_missrate_final_tpcczip.csv
+#	build/outdir/output_missrate_final_zip099.csv
+#	build/outdir/output_missrate_final_zip1.csv
+#	build/outdir/output_missrate_final_zip_rw.csv
+#	build/outdir/output_missrate_final_zip_scan.csv
+#	build/outdir/output_missrate_int_tpcc.csv
+#	build/outdir/output_missrate_int_zip06.csv
+#	build/outdir/output_missrate_int_zip12.csv
+#	build/outdir/output_missrate_tpccWA.csv
+#	build/outdir/output_missrate_tpccWA4.csv
+#	build/outdir/output_missrate_tpcc_DW_hr.csv
+#	build/outdir/output_missrate_uplimit_tpcc.csv
+#	build/outdir/output_missrate_uplimit_zip.csv
+#	build/outdir/output_missrate_weight_tpcc.csv
+#	build/outdir/output_missrate_weight_zipf.csv
+#	build/outdir/output_missrate_zip099_fdw03.csv
+#	build/outdir/output_missrate_zip4_dw.csv
+#	build/outdir/output_missrate_zip91WA4.csv
+#	build/outdir/output_missrate_zippiz.csv
+#	build/outdir/output_missrate_zippiz_dwhr.csv
+#	build/outdir/output_writes_final_tpcc_writes.csv
+#	build/outdir/output_writes_final_zip_write.csv
+#	build/outdir/output_writes_tpccWA.csv
+#	build/outdir/output_writes_tpccWA4.csv
+#	build/outdir/output_writes_zip91WA.csv
+#	build/outdir/output_writes_zip91WA4.csv
+#	build/outdir/reads_data_tpccWA4.csv
+#	build/outdir/reads_data_zip91WA4.csv
+#	build/outdir/reads_data_zipROWA4.csv
+#	build/outdir/writes_data_tpccWA4.csv
+#	build/outdir/writes_data_zip91WA4.csv
+#	build/outdir/writes_data_zipRO.csv
+#	build/outdir1/
+#	build/outdir2/
+#	build/outdir3/
+#	build/outdir4/
+#	build/s3fifo_debug.txt
+#	build/sigmod/
+#	build2/
+#	build_lyx/
+#	build_new/
+#	testTrace/rw_zipfian/
+#	testTrace/tpcc_zip/tpcc_zip_4.csv
+#	testTrace/zip_piz/
+#	testTrace/zipfi_0.6_1.2/
+#	testTrace/zipfian_scan/
+#

@@ -1,0 +1,257 @@
+//
+// Created by dev on 09.10.24.
+//
+//
+// Created by dev on 09.10.24.
+//
+
+#include "EvictStrategy.hpp"
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <ctime>
+
+struct TwoQ : public EvictStrategy {
+    using upper = EvictStrategy;
+
+    TwoQ() : upper() {}
+
+    double small;
+    double main;
+    double ghost;
+
+    int s_length;
+    int m_length;
+    int g_length;
+
+    uint page_misses;
+    uint dirty_evicts;
+
+    int tmp_hit;
+    int tmp_miss;
+    int count;
+
+    std::list<Access> s_queue;
+    std::list<Access> g_queue;
+    std::list<Access> m_queue;
+
+    // 保存的是内存的fifo队列
+    std::unordered_map<PID, std::list<Access>::iterator> hash_s;
+
+    // 保存的是在内存中的LRU队列
+    std::unordered_map<PID, std::list<Access>::iterator> hash_m;
+
+    // 保存的是最近被淘汰的fifo队列，实际已经不在内存中了, ghost
+    std::unordered_map<PID, std::list<Access>::iterator> hash_g;
+
+    void reInit(RamSize ram_size) override {
+
+        small = 0.25;
+
+        ghost = 0.50;
+
+        s_length = small * ram_size;
+        m_length = ram_size- s_length;
+        g_length = ghost * ram_size;
+
+        page_misses = 0;
+        dirty_evicts = 0;
+
+        s_queue.clear();
+        g_queue.clear();
+        m_queue.clear();
+
+        hash_s.clear();
+        hash_m.clear();
+        hash_g.clear();
+
+        EvictStrategy::reInit(ram_size);
+    }
+
+    std::pair<uint, uint> executeStrategy(const std::vector<Access>& access_data) override {
+
+        int count = 0;
+
+        std::ofstream outputFile("hitrate.txt", std::ios_base::app);
+
+        uint select_RAM_SIZE = 2000;
+        if(EvictStrategy::RAM_SIZE==select_RAM_SIZE)
+        {
+            outputFile << "2Q"<< std::endl;
+        }
+
+        for (Access single_access : access_data) {
+            checkSizes(single_access.pid);
+            single_access.accesscount = 0;
+            // 访问 single_access
+            if(EvictStrategy::RAM_SIZE==100)
+            {
+                if( static_cast<int>(s_queue.size())>s_length || static_cast<int>(m_queue.size())>m_length )
+                {
+                    outputFile << "Error="<< static_cast<int>(s_queue.size())-s_length <<" "<<static_cast<int>(m_queue.size())-m_length<< std::endl;
+                }
+            }
+            access(single_access);
+            if(EvictStrategy::RAM_SIZE==100)
+            {
+                //scanQueue();
+            }
+            count++;
+            
+            if(EvictStrategy::RAM_SIZE==select_RAM_SIZE)
+            {
+                int once_sum = 4000;
+                if(count%once_sum==0 && count>=400000 && count<=700000)
+                    // if(count%(EvictStrategy::RAM_SIZE)==0 && count>=400000 && count<=600000)
+                    //if(count%EvictStrategy::RAM_SIZE==0 && count>=0 && count<=200000)
+                {
+                    outputFile<<1.0*tmp_hit*100/once_sum<< std::endl;
+                    tmp_hit =0;
+                }
+            }
+
+            dirty_in_ram[single_access.pid] = dirty_in_ram[single_access.pid] || single_access.write;
+            in_ram[single_access.pid] = true;
+        }
+        //outputFile << "RamSize="<< EvictStrategy::RAM_SIZE<<" end"<< std::endl;
+        outputFile.close();
+// change,lx,throughput
+/*
+        for(uint i=0;i<(page_misses);i++)
+        {
+            sleepRead();
+        }
+        for(uint i=0;i<(dirty_evicts+ dirtyPages());i++)
+        {
+            sleepWrite();
+        }
+        std::cout<<"totalSeconds:";
+*/
+        return std::pair(page_misses, dirty_evicts + dirtyPages());
+    }
+
+    // 将 access 添加到内存中
+    void insert(const Access& pageX) {
+
+        // 如果在g中,添加到 m 中
+        if(hash_g.find(pageX.pid)!= hash_g.end())
+        {
+            while(static_cast<int>(m_queue.size()) >= m_length)
+            {
+                evictM();
+            }
+            insertToM(pageX);
+        }
+
+        // 如果不在 g 中,添加到 s 中
+        else
+        {
+            while(static_cast<int>(s_queue.size()) >= s_length)
+            {
+                evictS();
+            }
+
+            insertToS(pageX);
+        }
+            
+    }
+
+    void insertToM(const Access& pageX) {
+        m_queue.push_front(pageX);
+        hash_m[pageX.pid] = m_queue.begin();
+        while (static_cast<int>(m_queue.size()) > m_length)
+        {
+            Access tmp = *m_queue.rbegin();
+            m_queue.erase(hash_m[tmp.pid]);
+            hash_m.erase(tmp.pid);
+        }
+    }
+
+    void removeFromM(const Access& pageX) {
+        m_queue.erase(hash_m[pageX.pid]);
+        hash_m.erase(pageX.pid);
+    }
+
+    void insertToG(const Access& pageX) {
+        g_queue.push_front(pageX);
+        hash_g[pageX.pid] = g_queue.begin();
+        while (static_cast<int>(g_queue.size()) > g_length)
+        {
+            Access tmp = *g_queue.rbegin();
+            g_queue.erase(hash_g[tmp.pid]);
+            hash_g.erase(tmp.pid);
+        }
+    }
+
+    void insertToS(const Access& pageX) {
+        s_queue.push_front(pageX);
+        hash_s[pageX.pid] = s_queue.begin();
+    }
+
+    void removeFromS(const Access& pageX) {
+        s_queue.erase(hash_s[pageX.pid]);
+        hash_s.erase(pageX.pid);
+    }
+
+
+    // 访问 pid，如果 pid 不在内存中，放入容器中，并设置各种容器参数
+    // 如果容器已经在内存中，则更新容器的顺序冷热性
+    void access(const Access& access) override {
+        PID AccessPageId = access.pid;
+        // 在 m 里面，移动到m头部
+        if (hash_m.find(AccessPageId)!= hash_m.end())
+        {
+            tmp_hit++;
+            Access tmp = access;
+            // tmp.write = (tmp.write || hash_m[AccessPageId]->write);
+
+            removeFromM(tmp);
+            insertToM(tmp);
+        }
+        // 在 s 里面，不动
+        else if (hash_s.find(AccessPageId)!= hash_s.end())
+        {
+            tmp_hit++;
+            //Access tmp = access;
+            // hash_s[AccessPageId]->write = (tmp.write || hash_s[AccessPageId]->write);
+
+        }
+        // 如果不在内存中，则插入
+        else {
+            insert(access);
+            page_misses++;
+            tmp_miss++;
+        }
+    }
+
+    void evictS()
+    {
+        Access access = *s_queue.rbegin();
+
+        if(static_cast<int>(g_queue.size()) < g_length)
+        {
+            // 先加到m中，
+            insertToM(access);
+        }
+        // 将队尾添加到 ghost 中
+        insertToG(access);
+        removeFromS(access);
+
+        if(access.write)
+            dirty_evicts++;
+    }
+
+    void evictM()
+    {
+        Access access = *m_queue.rbegin();
+        removeFromM(access);
+        if(access.write)
+            dirty_evicts++;
+    }
+
+    // 驱逐一个页面，并从各种容器中 erase 掉，并返回
+    PID evictOne(Access access) override {
+        // 根据需求实现驱逐逻辑，这里暂不实现具体的驱逐算法，只返回一个无效的 PID
+        return access.pid;
+    }
+};
